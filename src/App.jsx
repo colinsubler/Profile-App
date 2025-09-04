@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from './components/Header';
+import Card from './components/Card';
+import imgOne from './assets/woman1.png';
+import imgTwo from './assets/man1.png';
+import imgThree from './assets/man2.png';
+import About from './components/About';
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>My App</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <div className="card-row">
+              <About />
+            </div>
+            <div className="card-row">
+              <Card
+                  imgSrc={imgOne}
+                  title="Janet Smith"
+                  description="CEO"
+              />
+              <Card
+                  imgSrc={imgTwo}
+                  title="Thomas Johnson"
+                  description="CFO"
+              />
+              <Card
+                  imgSrc={imgThree}
+                  title="Roger Williams"
+                  description="COO"
+              />
+            </div>
+            <div className='placeholder'></div>
+        </>
+    );
 }
 
-export default App
+export default App;
