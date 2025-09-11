@@ -41,11 +41,20 @@ body {
     cursor: pointer;
 }
 
-.card-row {
+.content-row {
     display: flex;
     justify-content: center;
     gap: 32px;
     margin: 32px;
+}
+
+.card-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin: 32px auto;
+    justify-items: center;
+    max-width: 850px;
 }
 
 .card {
