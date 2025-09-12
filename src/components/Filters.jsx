@@ -11,10 +11,7 @@ const Filters = ({
             <div className="select-filter" style={{ display: 'flex', flexDirection: 'column' }}>
                 <label htmlFor="select" style={{ marginBottom: '6px' }}>Filter by Job Title:</label>
                 <select id="select" onChange={onDescriptionChange} value={selectedValue}>
-                    <option value="all">All</option>
-                    {titles.map((title, idx) => (
-                        <option key={idx} value={title}>{title}</option>
-                    ))}
+                    <option value="all">All</option>{titles.map((title, idx) => (<option key={idx} value={title}>{title}</option>))}
                 </select>
             </div>
             <div className="search-filter" style={{ display: 'flex', flexDirection: 'column' }}>

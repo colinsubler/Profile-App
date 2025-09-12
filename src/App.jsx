@@ -95,10 +95,8 @@ function App() {
     };
 
     const filteredProfiles = profiles.filter(profile => {
-        const matchesDescription =
-            selectedDescription === 'all' || profile.description === selectedDescription;
-        const matchesName =
-            profile.title.toLowerCase().includes(searchName.toLowerCase());
+        const matchesDescription = selectedDescription === 'all' || profile.description === selectedDescription;
+        const matchesName = profile.title.toLowerCase().includes(searchName.toLowerCase());
         return matchesDescription && matchesName;
     });
 
