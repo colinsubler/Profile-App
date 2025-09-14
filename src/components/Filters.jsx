@@ -1,3 +1,5 @@
+import styles from '../styles/filters.module.css';
+
 const Filters = ({
     titles,
     selectedValue,
@@ -7,37 +9,36 @@ const Filters = ({
     onClear
 }) => {
     return (
-        <div className="filter-container" style={{ display: 'flex', alignItems: 'flex-end', gap: '32px' }}>
-            <div className="select-filter" style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="select" style={{ marginBottom: '6px' }}>Filter by Job Title:</label>
-                <select id="select" onChange={onDescriptionChange} value={selectedValue}>
-                    <option value="all">All</option>{titles.map((title, idx) => (<option key={idx} value={title}>{title}</option>))}
+        <div className={styles['filter-container']}>
+            <div className={styles['select-filter']}>
+                <label htmlFor="select" className={styles['filter-label']}>Filter by Job Title:</label>
+                <select
+                    id="select"
+                    onChange={onDescriptionChange}
+                    value={selectedValue}
+                    className={styles['filter-select']}
+                >
+                    <option value="all">All</option>
+                    {titles.map((title, idx) => (
+                        <option key={idx} value={title}>{title}</option>
+                    ))}
                 </select>
             </div>
-            <div className="search-filter" style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="searchName" style={{ marginBottom: '6px' }}>Search by Name:</label>
+            <div className={styles['search-filter']}>
+                <label htmlFor="searchName" className={styles['filter-label']}>Search by Name:</label>
                 <input
                     id="searchName"
                     type="text"
                     value={searchValue}
                     onChange={onSearchChange}
                     placeholder="Enter name"
-                    style={{ padding: '6px 10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                    className={styles['filter-input']}
                 />
             </div>
             <button
                 type="button"
                 onClick={onClear}
-                style={{
-                    height: '36px',
-                    alignSelf: 'flex-end',
-                    marginLeft: '8px',
-                    padding: '0 16px',
-                    borderRadius: '4px',
-                    border: '1px solid #ccc',
-                    background: '#fff',
-                    cursor: 'pointer'
-                }}
+                className={styles['clear-btn']}
             >
                 Clear
             </button>

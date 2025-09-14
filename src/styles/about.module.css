@@ -1,0 +1,21 @@
+.about-section {
+    text-align: center;
+    padding: 48px 0 0 0;
+}
+
+.about-img {
+    max-width: 850px;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto 24px auto;
+    width: 100%;
+    height: auto;
+}
+
+.about-content {
+    text-align: left;
+    max-width: 850px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}

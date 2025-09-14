@@ -1,11 +1,15 @@
-import React from 'react';
 import aboutImg from '../assets/campus.png';
+import styles from '../styles/about.module.css';
 
 const About = () => (
-    <div className="about-section" style={{ textAlign: 'center' }}>
-        <img src={aboutImg} alt="About" style={{ maxWidth: '850px', borderRadius: '8px', display: 'block', margin: '0 auto' }} />
+    <div className={styles['about-section']}>
+        <img
+            src={aboutImg}
+            alt="About"
+            className={styles['about-img']}
+        />
         <h1>About Us</h1>
-        <div style={{ textAlign: 'left', maxWidth: '850px', margin: '0 auto' }}>
+        <div className={styles['about-content']}>
             <p>
                 Internet Corp. was founded in 2010 with a vision to revolutionize the way people connect, communicate, and collaborate online. What began as a small startup in a single-room office has grown into a leading provider of innovative web solutions, serving clients across the globe. Our journey has been fueled by a passion for technology and a commitment to making the internet a better place for everyone.
             </p>
