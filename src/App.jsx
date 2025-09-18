@@ -8,7 +8,7 @@ import About from './components/About';
 import Wrapper from './components/Wrapper';
 import Filters from './components/Filters';
 
-const profiles = [
+const initialProfiles = [
     {
         imgSrc: imgOne,
         title: "Janet Smith",
@@ -77,9 +77,14 @@ const profiles = [
 ];
 
 function App() {
+    const [profiles, setProfiles] = useState(initialProfiles);
     const descriptions = Array.from(new Set(profiles.map(profile => profile.description)));
     const [selectedDescription, setSelectedDescription] = useState('all');
     const [searchName, setSearchName] = useState('');
+
+    const addProfiles = (profile) => {
+        setProfiles(prev => [...prev, profile]);
+    }
 
     const handleDescriptionChange = (event) => {
         setSelectedDescription(event.target.value);
@@ -107,6 +112,9 @@ function App() {
                 <div className="content-row">
                     <About />
                 </div>
+            </Wrapper>
+            <Wrapper id="add-profile">
+                <AddProfile AddProfiles={profiles}/>
             </Wrapper>
             <Wrapper id="cards">
                 <div className="card-row">

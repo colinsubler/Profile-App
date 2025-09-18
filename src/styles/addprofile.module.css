@@ -1,0 +1,104 @@
+.add-profile {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.add-profile h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.add-profile form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-profile label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.add-profile input[type="text"],
+.add-profile input[type="email"],
+.add-profile textarea,
+.add-profile input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    box-sizing: border-box;
+}
+
+.add-profile input:focus,
+.add-profile textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.add-profile textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.add-profile input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+.add-profile .error {
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-top: -10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.add-profile .success {
+    color: #27ae60;
+    font-size: 0.9em;
+    margin-top: -10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.add-profile button[type="submit"] {
+    padding: 15px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.add-profile button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+.add-profile button[type="submit"]:active {
+    transform: translateY(2px);
+}
+
+.add-profile button[type="submit"]:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+}
