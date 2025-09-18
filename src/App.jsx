@@ -114,7 +114,7 @@ function App() {
                 </div>
             </Wrapper>
             <Wrapper id="add-profile">
-                <AddProfile AddProfiles={profiles}/>
+                <AddProfile addProfiles={addProfiles}/>
             </Wrapper>
             <Wrapper id="cards">
                 <div className="card-row">

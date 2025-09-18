@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import '../styles/addprofile.module.css';
+
 const stripTags = (s) => s.replace(/<\/?[^>]+(>|$)/g, "");
 const trimCollapse = (s) => String(s ?? "").replace(/\s+/g, ' ').trim();
 const initialValues = {
@@ -26,7 +27,7 @@ const AddProfile = ({addProfiles}) => {
                 setErrors(prev => ({...prev, img: ''}));
             } else {
                 setValues(prev => ({...prev, img: null}));
-                setErrors("File is too large. Max size is 1MB.");
+                setErrors(prev => ({...prev, img: "File is too large. Max size is 1MB."}));
             }
         } else {
             setValues(prev => ({...prev, [e.target.name]: e.target.value}));
@@ -51,8 +52,8 @@ const AddProfile = ({addProfiles}) => {
             setValues(initialValues);
             setTimeout(() => setSuccess(""), 3000);
             e.currentTarget.reset();
-        }catch(error){
-            setErrors("Something is wrong!");
+        }catch (error) {
+            setErrors(prev => ({...prev, general: "Something is wrong!"}));
         }finally {
             setIsSubmitting(false);
         }
