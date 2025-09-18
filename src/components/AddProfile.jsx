@@ -39,25 +39,33 @@ const AddProfile = ({addProfiles}) => {
         setIsSubmitting(true);
 
         try {
+            if (!img) {
+                setErrors(prev => ({...prev, general: "Please select a valid image file."}));
+                setIsSubmitting(false);
+                return;
+            }
+
             const cleanedValues = {
-            name: trimCollapse(stripTags(name)),
-            title: trimCollapse(stripTags(title)),
-            email: trimCollapse(stripTags(email)),
-            bio: stripTags(bio).trim(),
-            img: URL.createObjectURL(img)
+                name: trimCollapse(stripTags(name)),
+                title: trimCollapse(stripTags(title)),
+                email: trimCollapse(stripTags(email)),
+                bio: stripTags(bio).trim(),
+                imgSrc: URL.createObjectURL(img)
             };
-        
+
             addProfiles(cleanedValues);
             setSuccess("Profile added successfully!");
             setValues(initialValues);
             setTimeout(() => setSuccess(""), 3000);
             e.currentTarget.reset();
-        }catch (error) {
-            setErrors(prev => ({...prev, general: "Something is wrong!"}));
-        }finally {
+
+        } catch (error) {
+            console.error("Error creating profile:", error);
+            setErrors(prev => ({...prev, general: "Something went wrong!"}));
+        } finally {
             setIsSubmitting(false);
         }
-    }
+    };
 
     return (
         <div className="add-profile">
