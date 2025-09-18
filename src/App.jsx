@@ -111,10 +111,8 @@ function App() {
             <Wrapper id="about">
                 <div className="content-row">
                     <About />
+                    <AddProfile addProfiles={addProfiles}/>
                 </div>
-            </Wrapper>
-            <Wrapper id="add-profile">
-                <AddProfile addProfiles={addProfiles}/>
             </Wrapper>
             <Wrapper id="cards">
                 <div className="card-row">
