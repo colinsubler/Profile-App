@@ -1,104 +1,133 @@
 .add-profile {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-.add-profile h2 {
+.add-profile h1 {
     text-align: center;
     color: #2c3e50;
-    margin-bottom: 25px;
-    font-size: 2em;
+    margin-bottom: 1.5rem;
+    font-size: 1.6em;
     font-weight: 600;
 }
 
-.add-profile form {
+.form-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 1rem;
 }
 
-.add-profile label {
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 180px;
+}
+
+.bio-group {
+    flex: 2;
+    min-width: 280px;
+}
+
+.submit-group {
+    align-self: flex-end;
+    min-width: 140px;
+}
+
+label {
     font-weight: 600;
-    color: #555;
+    color: #444;
     margin-bottom: 5px;
-    font-size: 1em;
+    font-size: 0.95em;
 }
 
-.add-profile input[type="text"],
-.add-profile input[type="email"],
-.add-profile textarea,
-.add-profile input[type="file"] {
+input[type="text"],
+input[type="email"],
+textarea,
+input[type="file"] {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1em;
+    border-radius: 6px;
+    font-size: 0.95em;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     box-sizing: border-box;
 }
 
-.add-profile input:focus,
-.add-profile textarea:focus {
+input:focus,
+textarea:focus {
     outline: none;
     border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.4);
 }
 
-.add-profile textarea {
+textarea {
     resize: vertical;
-    min-height: 120px;
+    min-height: 100px;
 }
 
-.add-profile input[type="file"] {
-    padding: 10px;
+input[type="file"] {
+    padding: 8px;
     border: 1px solid #ccc;
-    background-color: #f9f9f9;
+    background-color: #fafafa;
 }
 
-.add-profile .error {
+.error {
     color: #e74c3c;
-    font-size: 0.9em;
-    margin-top: -10px;
+    font-size: 0.85em;
     text-align: center;
     font-weight: 500;
+    margin-top: -5px;
 }
 
-.add-profile .success {
+.success {
     color: #27ae60;
-    font-size: 0.9em;
-    margin-top: -10px;
+    font-size: 0.85em;
     text-align: center;
     font-weight: 500;
+    margin-top: -5px;
 }
 
-.add-profile button[type="submit"] {
-    padding: 15px;
+button[type="submit"] {
+    padding: 12px;
     background-color: #3498db;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 600;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.add-profile button[type="submit"]:hover {
+button[type="submit"]:hover {
     background-color: #2980b9;
 }
 
-.add-profile button[type="submit"]:active {
+button[type="submit"]:active {
     transform: translateY(2px);
 }
 
-.add-profile button[type="submit"]:disabled {
+button[type="submit"]:disabled {
     background-color: #bdc3c7;
     cursor: not-allowed;
     transform: none;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
 }

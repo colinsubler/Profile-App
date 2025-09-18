@@ -1,15 +1,15 @@
 import {useState} from 'react';
-import '../styles/addprofile.module.css';
+import styles from '../styles/addprofile.module.css';
 
 const stripTags = (s) => s.replace(/<\/?[^>]+(>|$)/g, "");
 const trimCollapse = (s) => String(s ?? "").replace(/\s+/g, ' ').trim();
 const initialValues = {
-        name: '',
-        title: '',
-        email: '',
-        bio: '',
-        img: null
-    }
+    name: '',
+    title: '',
+    email: '',
+    bio: '',
+    img: null
+}
 
 const AddProfile = ({addProfiles}) => {
     const [values, setValues] = useState(initialValues);
@@ -68,37 +68,50 @@ const AddProfile = ({addProfiles}) => {
     };
 
     return (
-        <div className="add-profile">
-            <h2>Add Profile</h2>
-            <form onSubmit={(handleSubmit)}>
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" value={name} onChange={onChange} required />
+        <div className={styles['add-profile']}>
+            <h1>Add Profile</h1>
+            <form onSubmit={handleSubmit} className={styles['form-container']}>
+                {/* First Line */}
+                <div className={styles['form-row']}>
+                    <div className={styles['form-group']}>
+                        <label htmlFor="name">Name:</label>
+                        <input type="text" id="name" name="name" value={name} onChange={onChange} required />
+                    </div>
+                    <div className={styles['form-group']}>
+                        <label htmlFor="title">Title:</label>
+                        <input type="text" id="title" name="title" value={title} onChange={onChange} required />
+                    </div>
+                    <div className={styles['form-group']}>
+                        <label htmlFor="email">Email:</label>
+                        <input type="email" id="email" name="email" value={email} onChange={onChange} required />
+                    </div>
+                </div>
                 
-                <label htmlFor="title">Title:</label>
-                <input type="text" id="title" name="title" value={title} onChange={onChange} required />
+                {/* Second Line */}
+                <div className={styles['form-row']}>
+                    <div className={`${styles['form-group']} ${styles['bio-group']}`}>
+                        <label htmlFor="bio">Bio:</label>
+                        <textarea id="bio" name="bio" value={bio} onChange={onChange} required></textarea>
+                    </div>
+                    <div className={styles['form-group']}>
+                        <label htmlFor="img">Image:</label>
+                        <input type="file" id="img" name="img" accept="image/*" onChange={onChange} required />
+                    </div>
+                    <div className={`${styles['form-group']} ${styles['submit-group']}`}>
+                        <button type="submit" disabled={isSubmitting || 
+                            !trimCollapse(stripTags(name)) ||
+                            !trimCollapse(stripTags(title)) ||
+                            !trimCollapse(stripTags(email)) ||
+                            !stripTags(bio).trim() ||
+                            !img}>
+                            Add Profile
+                        </button>
+                    </div>
+                </div>
                 
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value={email} onChange={onChange} required />
-                
-                <label htmlFor="bio">Bio:</label>
-                <textarea id="bio" name="bio" value={bio} onChange={onChange} required></textarea>
-                
-                <label htmlFor="img">Image:</label>
-                <input type="file" id="img" name="img" accept="image/*" onChange={onChange} required />
-                
-                {errors.img && <p className="error">{errors.img}</p>}
-                {errors.general && <p className="error">{errors.general}</p>}
-                {success && <p className="success">{success}</p>}
-                
-                <button type="submit" disabled={isSubmitting || 
-                    !trimCollapse(stripTags(name)) ||
-                    !trimCollapse(stripTags(title)) ||
-                    !trimCollapse(stripTags(email)) ||
-                    !stripTags(bio).trim() ||
-                    !img}>
-                    Add Profile
-                </button>
-                {success && <p className="success">{success}</p>}
+                {errors.img && <p className={styles['error']}>{errors.img}</p>}
+                {errors.general && <p className={styles['error']}>{errors.general}</p>}
+                {success && <p className={styles['success']}>{success}</p>}
             </form>
         </div>
     )
