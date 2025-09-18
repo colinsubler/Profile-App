@@ -7,6 +7,7 @@ import imgThree from './assets/man2.png';
 import About from './components/About';
 import Wrapper from './components/Wrapper';
 import Filters from './components/Filters';
+import AddProfile from './components/AddProfile';
 
 const initialProfiles = [
     {
