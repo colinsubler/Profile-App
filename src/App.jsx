@@ -8,6 +8,7 @@ import About from './components/About';
 import Wrapper from './components/Wrapper';
 import Filters from './components/Filters';
 import AddProfile from './components/AddProfile';
+import FetchedProfiles from './components/FetchedProfiles';
 
 const initialProfiles = [
     {
@@ -105,16 +106,22 @@ const initialProfiles = [
 
 function App() {
     const [profiles, setProfiles] = useState(initialProfiles);
-    const descriptions = Array.from(new Set(profiles.map(profile => profile.description)));
-    const [selectedDescription, setSelectedDescription] = useState('all');
+    const [fetchedProfiles, setFetchedProfiles] = useState([]);
     const [searchName, setSearchName] = useState('');
+
+    // Combine all profiles into a single list, with fetched profiles at the beginning
+    const allProfiles = [...fetchedProfiles, ...profiles];
+
+    const allTitles = Array.from(new Set(allProfiles.map(profile => profile.title)));
+
+    const [selectedTitle, setSelectedTitle] = useState('All Titles');
 
     const addProfiles = (profile) => {
         setProfiles(prev => [...prev, profile]);
     }
 
-    const handleDescriptionChange = (event) => {
-        setSelectedDescription(event.target.value);
+    const handleTitleChange = (event) => {
+        setSelectedTitle(event.target.value);
     };
 
     const handleSearchChange = (event) => {
@@ -122,14 +129,14 @@ function App() {
     };
 
     const handleClear = () => {
-        setSelectedDescription('all');
+        setSelectedTitle('All Titles');
         setSearchName('');
     };
 
-    const filteredProfiles = profiles.filter(profile => {
-        const matchesDescription = selectedDescription === 'all' || profile.description === selectedDescription;
-        const matchesName = profile.title.toLowerCase().includes(searchName.toLowerCase());
-        return matchesDescription && matchesName;
+    const filteredProfiles = allProfiles.filter(profile => {
+        const matchesTitle = selectedTitle === 'All Titles' || profile.title === selectedTitle;
+        const matchesName = profile.name.toLowerCase().includes(searchName.toLowerCase());
+        return matchesTitle && matchesName;
     });
 
     return (
@@ -140,31 +147,38 @@ function App() {
                     <About />
                 </div>
             </Wrapper>
-            <Wrapper id="add-profile">    
+            <Wrapper id="add-profile">
                 <AddProfile addProfiles={addProfiles}/>
+            </Wrapper>
+            <Wrapper id="fetched-profiles">
+                <FetchedProfiles onDataFetched={setFetchedProfiles} />
             </Wrapper>
             <Wrapper id="cards">
                 <div className="card-row">
                     <Filters
-                        titles={descriptions}
-                        selectedValue={selectedDescription}
-                        onDescriptionChange={handleDescriptionChange}
+                        titles={allTitles}
+                        selectedValue={selectedTitle}
+                        onDescriptionChange={handleTitleChange}
                         searchValue={searchName}
                         onSearchChange={handleSearchChange}
                         onClear={handleClear}
                     />
                 </div>
                 <div className="card-row" id="profiles">
-                    {filteredProfiles.map((profile, index) => (
-                        <Card
-                            key={index}
-                            imgSrc={profile.imgSrc}
-                            name={profile.name}
-                            title={profile.title}
-                            email={profile.email}
-                            bio={profile.bio}
-                        />
-                    ))}
+                    {filteredProfiles.length > 0 ? (
+                        filteredProfiles.map((profile, index) => (
+                            <Card
+                                key={index}
+                                imgSrc={profile.imgSrc || profile.image_url}
+                                name={profile.name}
+                                title={profile.title}
+                                email={profile.email}
+                                bio={profile.bio}
+                            />
+                        ))
+                    ) : (
+                        <div>No profiles found.</div>
+                    )}
                 </div>
                 <div className='placeholder'></div>
             </Wrapper>
