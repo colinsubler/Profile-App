@@ -14,16 +14,16 @@ const Header = () => {
       <nav className={styles['header-nav-container']}>
         <ul className={styles['header-nav']}>
           <li>
-            <Link to="/" className={styles['header-btn']}>Home</Link>
+            <Link to="/Profile-App/" className={styles['header-btn']}>Home</Link>
           </li>
           <li>
-            <Link to="/about" className={styles['header-btn']}>About</Link>
+            <Link to="/Profile-App/about" className={styles['header-btn']}>About</Link>
           </li>
           <li>
-            <Link to="/add-profile" className={styles['header-btn']}>Add Profile</Link>
+            <Link to="/Profile-App/add-profile" className={styles['header-btn']}>Add Profile</Link>
           </li>
           <li>
-            <Link to="/fetched-profiles" className={styles['header-btn']}>Fetched Profiles</Link>
+            <Link to="/Profile-App/fetched-profiles" className={styles['header-btn']}>Fetched Profiles</Link>
           </li>
         </ul>
         <button

@@ -24,7 +24,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/Profile-App">
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
