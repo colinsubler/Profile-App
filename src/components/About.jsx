@@ -1,13 +1,7 @@
-import aboutImg from '../assets/campus.png';
 import styles from '../styles/about.module.css';
 
 const About = () => (
     <div className={styles['about-section']}>
-        <img
-            src={aboutImg}
-            alt="About"
-            className={styles['about-img']}
-        />
         <h1>About Us</h1>
         <div className={styles['about-content']}>
             <p>

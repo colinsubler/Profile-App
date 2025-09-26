@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import styles from '../styles/addprofile.module.css';
 
 const stripTags = (s) => s.replace(/<\/?[^>]+(>|$)/g, "");
@@ -11,11 +11,11 @@ const initialValues = {
     img: null
 }
 
-const AddProfile = ({addProfiles}) => {
+const AddProfile = ({ addProfile }) => {
     const [values, setValues] = useState(initialValues);
-    
-    const {name, title, email, bio, img} = values;
-    const [errors, setErrors] = useState({img: '', general: ''});
+
+    const { name, title, email, bio, img } = values;
+    const [errors, setErrors] = useState({ img: '', general: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [success, setSuccess] = useState("");
 
@@ -23,24 +23,27 @@ const AddProfile = ({addProfiles}) => {
         if (e.target.name === 'img') {
             const file = e.target.files[0];
             if (file && file.size < 1024 * 1024) {
-                setValues(prev => ({...prev, img: file}));
-                setErrors(prev => ({...prev, img: ''}));
+                setValues(prev => ({ ...prev, img: file }));
+                setErrors(prev => ({ ...prev, img: '' }));
             } else {
-                setValues(prev => ({...prev, img: null}));
-                setErrors(prev => ({...prev, img: "File is too large. Max size is 1MB."}));
+                setValues(prev => ({ ...prev, img: null }));
+                setErrors(prev => ({ ...prev, img: "File is too large. Max size is 1MB." }));
             }
         } else {
-            setValues(prev => ({...prev, [e.target.name]: e.target.value}));
+            setValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
         }
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         try {
             if (!img) {
-                setErrors(prev => ({...prev, general: "Please select a valid image file."}));
+                setErrors((prev) => ({
+                    ...prev,
+                    general: "Please select a valid image file.",
+                }));
                 setIsSubmitting(false);
                 return;
             }
@@ -50,18 +53,18 @@ const AddProfile = ({addProfiles}) => {
                 title: trimCollapse(stripTags(title)),
                 email: trimCollapse(stripTags(email)),
                 bio: stripTags(bio).trim(),
-                imgSrc: URL.createObjectURL(img)
+                imgSrc: URL.createObjectURL(img),
             };
 
-            addProfiles(cleanedValues);
+            addProfile(cleanedValues);
+
             setSuccess("Profile added successfully!");
             setValues(initialValues);
             setTimeout(() => setSuccess(""), 3000);
             e.currentTarget.reset();
-
         } catch (error) {
             console.error("Error creating profile:", error);
-            setErrors(prev => ({...prev, general: "Something went wrong!"}));
+            setErrors((prev) => ({ ...prev, general: "Something went wrong!" }));
         } finally {
             setIsSubmitting(false);
         }
@@ -86,7 +89,7 @@ const AddProfile = ({addProfiles}) => {
                         <input type="email" id="email" name="email" value={email} onChange={onChange} required />
                     </div>
                 </div>
-                
+
                 {/* Second Line */}
                 <div className={styles['form-row']}>
                     <div className={`${styles['form-group']} ${styles['bio-group']}`}>
@@ -98,7 +101,7 @@ const AddProfile = ({addProfiles}) => {
                         <input type="file" id="img" name="img" accept="image/*" onChange={onChange} required />
                     </div>
                     <div className={`${styles['form-group']} ${styles['submit-group']}`}>
-                        <button type="submit" disabled={isSubmitting || 
+                        <button type="submit" disabled={isSubmitting ||
                             !trimCollapse(stripTags(name)) ||
                             !trimCollapse(stripTags(title)) ||
                             !trimCollapse(stripTags(email)) ||
@@ -108,7 +111,7 @@ const AddProfile = ({addProfiles}) => {
                         </button>
                     </div>
                 </div>
-                
+
                 {errors.img && <p className={styles['error']}>{errors.img}</p>}
                 {errors.general && <p className={styles['error']}>{errors.general}</p>}
                 {success && <p className={styles['success']}>{success}</p>}

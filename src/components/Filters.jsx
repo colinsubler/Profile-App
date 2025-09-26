@@ -8,13 +8,21 @@ const Filters = ({
     onSearchChange,
     onClear
 }) => {
+    const handleSelectChange = (e) => {
+        if (e.target.value === 'all') {
+            onClear();
+        } else {
+            onDescriptionChange(e);
+        }
+    };
+
     return (
         <div className={styles['filter-container']}>
             <div className={styles['select-filter']}>
                 <label htmlFor="select" className={styles['filter-label']}>Filter by Job Title:</label>
                 <select
                     id="select"
-                    onChange={onDescriptionChange}
+                    onChange={handleSelectChange}
                     value={selectedValue}
                     className={styles['filter-select']}
                 >
