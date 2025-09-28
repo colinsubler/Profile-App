@@ -23,6 +23,11 @@ const Header = () => {
             <Link to="/add-profile" className={styles['header-btn']}>Add Profile</Link>
           </li>
           <li>
+            <Link to="/local-profiles" className={styles['header-btn']}>
+              Local Profiles
+            </Link>
+          </li>
+          <li>
             <Link to="/fetched-profiles" className={styles['header-btn']}>Fetched Profiles</Link>
           </li>
         </ul>

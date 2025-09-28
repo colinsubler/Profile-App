@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from '../styles/addprofile.module.css';
 
 const stripTags = (s) => s.replace(/<\/?[^>]+(>|$)/g, "");
@@ -13,11 +14,12 @@ const initialValues = {
 
 const AddProfile = ({ addProfile }) => {
     const [values, setValues] = useState(initialValues);
-
     const { name, title, email, bio, img } = values;
     const [errors, setErrors] = useState({ img: '', general: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [success, setSuccess] = useState("");
+
+    const navigate = useNavigate();
 
     const onChange = (e) => {
         if (e.target.name === 'img') {
@@ -60,8 +62,13 @@ const AddProfile = ({ addProfile }) => {
 
             setSuccess("Profile added successfully!");
             setValues(initialValues);
-            setTimeout(() => setSuccess(""), 3000);
             e.currentTarget.reset();
+
+            setTimeout(() => {
+                setSuccess("");
+                navigate("/");
+            }, 1000);
+
         } catch (error) {
             console.error("Error creating profile:", error);
             setErrors((prev) => ({ ...prev, general: "Something went wrong!" }));

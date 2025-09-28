@@ -1,0 +1,72 @@
+import React, { useState } from 'react';
+import Wrapper from '../components/Wrapper';
+import Filters from '../components/Filters';
+import Card from '../components/Card';
+
+const LocalProfilesPage = ({ profiles }) => {
+  const [searchName, setSearchName] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState('All');
+
+  // Extract unique titles
+  const allTitles = Array.from(new Set(profiles.map(profile => profile.title)));
+
+  const handleTitleChange = (event) => {
+    const value = event.target.value;
+    if (value === 'all') {
+      setSelectedTitle('All');
+      setSearchName('');
+    } else {
+      setSelectedTitle(value);
+    }
+  };
+
+  const handleSearchChange = (event) => setSearchName(event.target.value);
+  const handleClear = () => {
+    setSelectedTitle('All');
+    setSearchName('');
+  };
+
+  const filteredProfiles = profiles.filter(profile => {
+    const matchesTitle = selectedTitle === 'All' || profile.title === selectedTitle;
+    const matchesName = profile.name.toLowerCase().includes(searchName.toLowerCase());
+    return matchesTitle && matchesName;
+  });
+
+  return (
+    <>
+      {/* Filters */}
+      <Wrapper id="filters">
+        <Filters
+          titles={allTitles}
+          selectedValue={selectedTitle}
+          onDescriptionChange={handleTitleChange}
+          searchValue={searchName}
+          onSearchChange={handleSearchChange}
+          onClear={handleClear}
+        />
+      </Wrapper>
+
+      {/* Cards */}
+      <Wrapper id="cards">
+        <div className="card-row">
+          {filteredProfiles.length > 0 ? (
+            filteredProfiles.map((profile, index) => (
+              <Card
+                key={index}
+                imgSrc={profile.imgSrc || profile.image_url}
+                name={profile.name}
+                title={profile.title}
+                email={profile.email}
+                bio={profile.bio}
+              />
+            ))
+          ) : (
+            <div>No profiles found.</div>
+          )}
+        </div>
+      </Wrapper>
+    </>
+  );
+};
+
+export default LocalProfilesPage;

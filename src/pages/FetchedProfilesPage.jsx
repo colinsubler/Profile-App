@@ -1,72 +1,59 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Wrapper from '../components/Wrapper';
 import FetchedProfiles from '../components/FetchedProfiles';
-import Filters from '../components/Filters';
 import Card from '../components/Card';
 
-const FetchedProfilesPage = ({ profiles, setProfiles }) => {
-  const [searchName, setSearchName] = useState('');
-  const [selectedTitle, setSelectedTitle] = useState('All Titles');
+const FetchedProfilesPage = () => {
+  const [fetchedProfiles, setFetchedProfiles] = useState([]);
+  const navigate = useNavigate();
 
   const handleDataFetched = (newProfiles) => {
-    setProfiles(prev => [...newProfiles, ...prev]);
+    const profilesWithId = newProfiles.map((p, index) => ({
+      ...p,
+      id: p.id || Date.now() + index,
+    }));
+    setFetchedProfiles(prev => [...profilesWithId, ...prev]);
   };
 
-  const allTitles = Array.from(new Set(profiles.map(profile => profile.title)));
-
-  const handleTitleChange = (event) => setSelectedTitle(event.target.value);
-  const handleSearchChange = (event) => setSearchName(event.target.value);
-  const handleClear = () => {
-    setSelectedTitle('All Titles');
-    setSearchName('');
+  const handleCardClick = (profile) => {
+    if (profile.id) {
+      navigate(`/fetched-profiles/${profile.id}`);
+    }
   };
-
-  const filteredProfiles = profiles.filter(profile => {
-    const matchesTitle = selectedTitle === 'All Titles' || profile.title === selectedTitle;
-    const matchesName = profile.name.toLowerCase().includes(searchName.toLowerCase());
-    return matchesTitle && matchesName;
-  });
 
   return (
     <>
-      {/* Fetch profiles by title from API */}
       <Wrapper id="fetched-profiles">
         <FetchedProfiles onDataFetched={handleDataFetched} />
       </Wrapper>
 
-      {/* Filters */}
-      <Wrapper id="filters">
-        <Filters
-          titles={allTitles}
-          selectedValue={selectedTitle}
-          onDescriptionChange={handleTitleChange}
-          searchValue={searchName}
-          onSearchChange={handleSearchChange}
-          onClear={handleClear}
-        />
-      </Wrapper>
-
-      {/* Cards */}
       <Wrapper id="cards">
         <div className="card-row">
-          {filteredProfiles.length > 0 ? (
-            filteredProfiles.map((profile, index) => (
-              <Card
+          {fetchedProfiles.length > 0 ? (
+            fetchedProfiles.map((profile, index) => (
+              <div
                 key={index}
-                imgSrc={profile.imgSrc || profile.image_url}
-                name={profile.name}
-                title={profile.title}
-                email={profile.email}
-                bio={profile.bio}
-              />
+                onClick={() => handleCardClick(profile)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card
+                  imgSrc={profile.imgSrc || profile.image_url}
+                  name={profile.name}
+                  title={profile.title}
+                  email={profile.email}
+                  bio={profile.bio}
+                />
+              </div>
             ))
           ) : (
-            <div>No profiles found.</div>
+            <div>No fetched profiles yet.</div>
           )}
         </div>
       </Wrapper>
     </>
   );
 };
+
 
 export default FetchedProfilesPage;
