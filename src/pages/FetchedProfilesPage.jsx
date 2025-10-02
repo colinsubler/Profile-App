@@ -8,13 +8,14 @@ const FetchedProfilesPage = () => {
   const [fetchedProfiles, setFetchedProfiles] = useState([]);
   const navigate = useNavigate();
 
-  const handleDataFetched = (newProfiles) => {
-    const profilesWithId = newProfiles.map((p, index) => ({
+    const handleDataFetched = (newProfiles) => {
+    const profilesWithId = (newProfiles || []).map((p, index) => ({
       ...p,
       id: p.id || Date.now() + index,
     }));
-    setFetchedProfiles(prev => [...profilesWithId, ...prev]);
+    setFetchedProfiles(profilesWithId);
   };
+
 
   const handleCardClick = (profile) => {
     if (profile.id) {
@@ -54,6 +55,5 @@ const FetchedProfilesPage = () => {
     </>
   );
 };
-
 
 export default FetchedProfilesPage;

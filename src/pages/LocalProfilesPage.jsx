@@ -1,29 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Wrapper from '../components/Wrapper';
 import Filters from '../components/Filters';
 import Card from '../components/Card';
+import ProfilesContext from '../components/ProfilesContext';
 
-const LocalProfilesPage = ({ profiles }) => {
+const LocalProfilesPage = () => {
+  const { profiles } = useContext(ProfilesContext);
   const [searchName, setSearchName] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('All');
 
-  // Extract unique titles
   const allTitles = Array.from(new Set(profiles.map(profile => profile.title)));
 
   const handleTitleChange = (event) => {
     const value = event.target.value;
-    if (value === 'all') {
-      setSelectedTitle('All');
-      setSearchName('');
-    } else {
-      setSelectedTitle(value);
-    }
-  };
-
-  const handleSearchChange = (event) => setSearchName(event.target.value);
-  const handleClear = () => {
-    setSelectedTitle('All');
-    setSearchName('');
+    setSelectedTitle(value === 'all' ? 'All' : value);
+    if (value === 'all') setSearchName('');
   };
 
   const filteredProfiles = profiles.filter(profile => {
@@ -34,19 +25,20 @@ const LocalProfilesPage = ({ profiles }) => {
 
   return (
     <>
-      {/* Filters */}
       <Wrapper id="filters">
         <Filters
           titles={allTitles}
           selectedValue={selectedTitle}
           onDescriptionChange={handleTitleChange}
           searchValue={searchName}
-          onSearchChange={handleSearchChange}
-          onClear={handleClear}
+          onSearchChange={(e) => setSearchName(e.target.value)}
+          onClear={() => {
+            setSelectedTitle('All');
+            setSearchName('');
+          }}
         />
       </Wrapper>
 
-      {/* Cards */}
       <Wrapper id="cards">
         <div className="card-row">
           {filteredProfiles.length > 0 ? (
