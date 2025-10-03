@@ -48,10 +48,8 @@ const FetchedProfiles = ({ onDataFetched }) => {
 
     fetchTitles();
     fetchAllProfiles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 2️⃣ Only fetch filtered profiles when a title is selected (not "All")
   useEffect(() => {
     if (!selectedTitle || selectedTitle === 'All') return; // do nothing
 
@@ -85,7 +83,6 @@ const FetchedProfiles = ({ onDataFetched }) => {
     const value = e.target.value;
     setSelectedTitle(value);
 
-    // If "All" selected, just show cached allProfiles immediately
     if (value === 'All' && allProfiles) {
       onDataFetched(allProfiles);
     }

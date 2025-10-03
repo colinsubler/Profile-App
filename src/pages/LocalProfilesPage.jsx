@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import Wrapper from '../components/Wrapper';
 import Filters from '../components/Filters';
 import Card from '../components/Card';
@@ -8,6 +8,10 @@ const LocalProfilesPage = () => {
   const { profiles } = useContext(ProfilesContext);
   const [searchName, setSearchName] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('All');
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const allTitles = Array.from(new Set(profiles.map(profile => profile.title)));
 

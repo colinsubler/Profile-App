@@ -1,10 +1,8 @@
-// src/components/AddProfile.jsx
-import React, { useState, useContext } from 'react';
+import React, { useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProfilesContext from '../components/ProfilesContext';
 import styles from '../styles/addprofile.module.css';
 
-// Utility functions
 const stripTags = (s) => s.replace(/<\/?[^>]+(>|$)/g, "");
 const trimCollapse = (s) => String(s ?? "").replace(/\s+/g, ' ').trim();
 
@@ -16,13 +14,37 @@ const initialValues = {
   img: null
 };
 
+const initialState = {
+  values: initialValues,
+  errors: { img: '', general: '' },
+  isSubmitting: false,
+  success: ''
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'SET_VALUE':
+      return { ...state, values: { ...state.values, [action.field]: action.value } };
+    case 'SET_IMG':
+      return { ...state, values: { ...state.values, img: action.file }, errors: { ...state.errors, img: action.error || '' } };
+    case 'SET_ERROR':
+      return { ...state, errors: { ...state.errors, ...action.payload } };
+    case 'SET_SUBMITTING':
+      return { ...state, isSubmitting: action.payload };
+    case 'SET_SUCCESS':
+      return { ...state, success: action.payload };
+    case 'RESET_FORM':
+      return { ...initialState };
+    default:
+      return state;
+  }
+}
+
 const AddProfile = () => {
-  const { addProfile } = useContext(ProfilesContext); // Use context
-  const [values, setValues] = useState(initialValues);
+  const { addProfile } = useContext(ProfilesContext);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { values, errors, isSubmitting, success } = state;
   const { name, title, email, bio, img } = values;
-  const [errors, setErrors] = useState({ img: '', general: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,25 +52,23 @@ const AddProfile = () => {
     if (e.target.name === 'img') {
       const file = e.target.files[0];
       if (file && file.size < 1024 * 1024) {
-        setValues(prev => ({ ...prev, img: file }));
-        setErrors(prev => ({ ...prev, img: '' }));
+        dispatch({ type: 'SET_IMG', file, error: '' });
       } else {
-        setValues(prev => ({ ...prev, img: null }));
-        setErrors(prev => ({ ...prev, img: "File is too large. Max size is 1MB." }));
+        dispatch({ type: 'SET_IMG', file: null, error: "File is too large. Max size is 1MB." });
       }
     } else {
-      setValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
+      dispatch({ type: 'SET_VALUE', field: e.target.name, value: e.target.value });
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    dispatch({ type: 'SET_SUBMITTING', payload: true });
 
     try {
       if (!img) {
-        setErrors(prev => ({ ...prev, general: "Please select a valid image file." }));
-        setIsSubmitting(false);
+        dispatch({ type: 'SET_ERROR', payload: { general: "Please select a valid image file." } });
+        dispatch({ type: 'SET_SUBMITTING', payload: false });
         return;
       }
 
@@ -60,22 +80,22 @@ const AddProfile = () => {
         imgSrc: URL.createObjectURL(img),
       };
 
-      addProfile(cleanedValues); // Add via context
+      addProfile(cleanedValues);
 
-      setSuccess("Profile added successfully!");
-      setValues(initialValues);
+      dispatch({ type: 'SET_SUCCESS', payload: "Profile added successfully!" });
+      dispatch({ type: 'RESET_FORM' });
       e.currentTarget.reset();
 
       setTimeout(() => {
-        setSuccess("");
-        navigate("/local-profiles"); // Redirect to profile list
+        dispatch({ type: 'SET_SUCCESS', payload: "" });
+        navigate("/local-profiles");
       }, 1000);
 
     } catch (error) {
       console.error("Error creating profile:", error);
-      setErrors(prev => ({ ...prev, general: "Something went wrong!" }));
+      dispatch({ type: 'SET_ERROR', payload: { general: "Something went wrong!" } });
     } finally {
-      setIsSubmitting(false);
+      dispatch({ type: 'SET_SUBMITTING', payload: false });
     }
   };
 
